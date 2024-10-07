@@ -1,24 +1,39 @@
 <script>
-	let name = 'world';
-	let src = '/public/build/favicon.png';
+	let numbers = [1, 2, 3, 4, 5];
+	function addNumber(){
+		numbers.push(numbers.length + 1);
+		numbers = [...numbers];
+	}
+
+	$: sum = numbers.reduce((t, n)=> t + n, 0);
+
+    let count = 0;
+	$: doubled = count * 2;
+	function incrementCount() {
+		count += 1;
+	}
+	$: {
+		console.log(`the count is ${count}`);
+	}
+	$:if(count >= 10) {
+		alert('count is dangerously high!');
+		count = 0;
+	}
 </script>
 
+<p>{numbers.join(' + ')} = {sum}</p>
 
-<img src={src} alt="favicon" />
+<button on:click={incrementCount}>
+	Clicked {count}
+	{count === 1 ? 'time' : 'times'}
+</button>
 
-<h1> Hello {name.toUpperCase()} </h1> 
-<p>paragrafo</p>
+<button on:click={addNumber}> Add a number</button>
 
+<p>{count} doubled is {doubled}</p>
 
 <style>
-	p {
-		color: blue;
-		font-family: 'Comic Sans MS', cursive;
-		font-size: 2em;
-	}
-	h1{
-		color: red;
-		font-family: 'Comic Sans MS', cursive;
-		font-size: 2em;
-	}
+    button {
+	color: red;
+    }
 </style>
